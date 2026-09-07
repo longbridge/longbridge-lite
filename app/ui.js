@@ -18,6 +18,7 @@
 // read. Nothing in this file writes a pixel.
 
 import { Background, PathBuilder, div } from "gpui-kit";
+import { Button as NativeButton, Separator as NativeSeparator, Input as NativeInput, ChoiceItem, ButtonGroup as NativeButtonGroup, TabList as NativeTabList } from "./gpui-omarchy/index.js";
 import {
   Table,
   TableBody,
@@ -51,16 +52,13 @@ import {
   Panel,
   PopupSurface,
   SectionLabel,
-  Separator,
   Step,
   Surface,
   tableHeaderHeight,
   TableHeaderRow,
   TableRow,
-  Tabs,
-  TextField,
   Toolbar,
-} from "omarchy-ui";
+} from "./gpui-omarchy/composition.js";
 import {
   amplitude,
   averagePrice,
@@ -131,7 +129,7 @@ export const smallCaps = (tokens, value) =>
   new SectionLabel(String(value).toUpperCase()).build(context(tokens));
 
 /** @param {import("gpui-base").Theme} tokens */
-export const rule = (tokens) => new Separator().build(context(tokens));
+export const rule = (_tokens) => new NativeSeparator();
 
 /** @param {import("gpui-base").Theme} tokens */
 export const panel = (tokens) => new Surface().build(context(tokens));
@@ -146,20 +144,11 @@ export const panel = (tokens) => new Surface().build(context(tokens));
 export function action(tokens, id, caption, onClick, options = {}) {
   const { variant = "default", disabled = false, selected = false, quiet = false } = options;
   const ghost = variant === "ghost" || quiet;
-  return (
-    new Button(id)
-      .label(caption)
-      .accent(variant === "primary")
-      .danger(variant === "destructive")
-      // Every variant draws a border except the quiet one, which is the whole of
-      // what makes it quiet: a control that grows a border on hover is a control
-      // that resizes on hover, and its neighbours move with it.
-      .bordered(!ghost)
-      .selected(selected)
-      .disabled(disabled)
-      .onClick(onClick)
-      .build(context(tokens))
-  );
+  let button = new NativeButton(id).label(caption).child(label(tokens, caption));
+  if (variant === "primary") button = button.primary();
+  else if (variant === "destructive") button = button.danger();
+  else if (!ghost) button = button.outline();
+  return button.selected(selected).disabled(disabled).on_click(onClick);
 }
 
 /**
@@ -383,7 +372,7 @@ export function filterInput(tokens, state, width = 180) {
   // stood four pixels taller than the buttons beside it and set the height of
   // the whole row, so a strip of quiet chrome asked for more of the pane than
   // the table under it.
-  return new TextField().state(state).size("small").width(width).build(context(tokens));
+  return new NativeInput(state).w(width).h(style().space(24)).py(0);
 }
 
 /**
@@ -401,10 +390,10 @@ export function filterInput(tokens, state, width = 180) {
  */
 export function valueField(tokens, state, options = {}) {
   const { unit = "", width } = options;
-  const field = new TextField().state(state);
-  if (unit) field.suffix(unit);
-  if (width !== undefined) field.width(width);
-  return field.build(context(tokens));
+  const field = new NativeInput(state);
+  if (unit) field.child(label(tokens, unit));
+  if (width !== undefined) field.w(width);
+  return field;
 }
 
 /**
@@ -1581,12 +1570,8 @@ export function orderDetail(tokens, order, actions = {}) {
  * and each one is already a focusable button. Selection is carried by fill and
  * position rather than by text colour alone.
  *
- * Its place in the tab order is not passed in, because a base `Tab` owns that
- * part of its own focus and refuses a `tab_index` written onto it. A run of
- * choices is walked where it was built, which is where it is read -- and that
- * is why nothing else on the ticket names an index either: an explicit index
- * is walked after everything that has none, so one control naming its place
- * would reorder every control that does not.
+ * The native group is one keyboard stop. Arrow keys move between enabled
+ * choices and Enter/Space commit; the application owns the selected value.
  *
  * @param {import("gpui-base").Theme} tokens
  * @param {string} id
@@ -1595,22 +1580,16 @@ export function orderDetail(tokens, order, actions = {}) {
  * @param {(next: string, cx: import("gpui-kit").Context) => void} onChange
  */
 export function segmented(tokens, id, options, value, onChange) {
-  return new Tabs(id)
-    .segmented()
-    .items(options.map((option) => ({ value: option.value, label: option.label })))
-    .value(value)
-    .onChange(onChange)
-    .build(context(tokens));
+  return new NativeButtonGroup(id, value)
+    .children(options.map((option) => new ChoiceItem(option.value, option.label)))
+    .on_change(onChange);
 }
 
 /**
  * A run of intervals, or of anything else a panel is currently showing one of.
  *
- * The underline shape: these are places to go rather than a field's worth of
- * answer, so they sit on the surface they belong to and the current one is
- * marked beneath. The library reserves that underline on every tab and colours
- * one, which is what keeps the row from moving by its own width when the
- * choice changes.
+ * Native TabList owns selection styling and keyboard navigation. The view
+ * chooses which chart interval each stable option value represents.
  *
  * @param {import("gpui-base").Theme} tokens
  * @param {string} id
@@ -1620,13 +1599,11 @@ export function segmented(tokens, id, options, value, onChange) {
  * @param {string} [label] what this run is choosing, for a screen reader
  */
 export function intervalTabs(tokens, id, options, value, onChange, label = "") {
-  const tabs = new Tabs(id)
-    .items(options.map((option) => ({ value: option.value, label: option.label })))
-    .value(value)
-    .onChange(onChange)
-    .size("xsmall");
-  if (label) tabs.accessibilityLabel(label);
-  return tabs.build(context(tokens));
+  const tabs = new NativeTabList(id, value)
+    .children(options.map((option) => new ChoiceItem(option.value, option.label)))
+    .on_change(onChange);
+  if (label) tabs.accessibility_label(label);
+  return tabs;
 }
 
 /**

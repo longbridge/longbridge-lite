@@ -1098,7 +1098,7 @@ fn the_filter_field_is_on_the_toolbar_control_ramp() {
         .expect("filterInput function");
 
     assert!(
-        filter.contains(".size(\"small\")"),
+        filter.contains(".h(style().space(24))"),
         "filterInput must be small, like the iconAction and menuTrigger it shares a row with"
     );
 }

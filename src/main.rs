@@ -4,7 +4,7 @@ use gpui_kit::{
     App, Bounds, KeyBinding, Menu, MenuItem, TitlebarOptions, WindowBounds, WindowOptions, actions,
     point, px, size, transparent_black,
 };
-use gpui_shell::{AppAssets, HostModule, HostValue, ShellRuntime, plugin::PluginManifest};
+use gpui_shell::{AppAssets, HostModule, HostValue, plugin::PluginManifest};
 
 const PLUGIN_ID: &str = "com.longbridge.desktop-lite";
 
@@ -49,7 +49,7 @@ fn main() {
     gpui_kit::application()
         .with_assets(assets)
         .run(move |cx| {
-            gpui_shell::init(cx);
+            gpui_omarchy_shell::init(cx);
             gpui_shell::set_bundle_id(PLUGIN_ID).expect("failed to configure application identity");
             // Keep the PluginManager-era location so an upgrade does not make
             // an existing OAuth session look as though it disappeared.
@@ -83,7 +83,7 @@ fn main() {
             .detach();
             cx.activate(true);
 
-            let runtime = ShellRuntime::new(cx).expect("failed to start gpui-shell runtime");
+            let runtime = gpui_omarchy_shell::new_runtime(cx).expect("failed to start gpui-shell runtime");
             if std::env::var_os("LONGBRIDGE_PROFILE").is_some() {
                 // What the shell's own counters cannot see.
                 //

@@ -13,11 +13,10 @@ control scales from `shell.toml` beside it. Switching the Omarchy theme updates
 Longbridge Lite automatically; the application does not inspect
 `/etc/os-release` or bundle its own font.
 
-The interface is built from [Omarchy UI](https://github.com/huacnlee/omarchy-ui),
-declared as a Git dependency in `app/gpui-shell.json` and resolved by gpui-shell
-before the application starts. Everything generic — a button, a badge, a panel,
-a table's header, a reading, a key cap — is one of its classes; what stays in
-this repository is what only a market terminal knows.
+The interface uses [gpui-omarchy](https://github.com/huacnlee/gpui-omarchy).
+The host registers its native component adapter, and the build script bundles
+its JavaScript composition and theme helpers into `app/gpui-omarchy/`.
+The application no longer fetches the separate Omarchy UI repository.
 
 ## Install
 
@@ -103,9 +102,9 @@ configures assets, creates `ShellRuntime`, loads the
 plugin, and opens `ShellRoot`. Native concerns stay in the host; product state
 and rendering stay in JavaScript.
 
-The host depends on `gpui-shell` and `gpui-kit` from the `main` branch of
-[gpui-kit](https://github.com/longbridge/gpui-kit). The lockfile
-pins the exact merged revision used by each release. `gpui-shell` exposes a
+The host currently depends on the sibling [gpui-kit](https://github.com/longbridge/gpui-kit)
+checkout, including the native-state adapter interface used by gpui-omarchy.
+`gpui-shell` exposes a
 constrained ES-module API — one module per crate that provides the capability,
 so `"gpui-kit"` holds GPUI's own elements and what the runtime adds,
 `"gpui-base"` holds base's layout helpers, components and theme, and
@@ -218,6 +217,10 @@ curl -fsSL https://github.com/longbridge/longbridge-lite/raw/refs/heads/main/ins
 ```
 
 ## Run
+
+Keep checkouts of `gpui-omarchy` and `gpui-kit` beside this repository. Its `shell` crate
+provides the host adapter; this application explicitly enables its `gpui-shell`
+feature. Cargo generates `app/gpui-omarchy/` from that crate's bundled sources.
 
 Register an OAuth public client once and set its fixed `CLIENT_ID` in
 `app/auth.js`. A public client must not contain a client secret.

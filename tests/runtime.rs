@@ -5,7 +5,6 @@ use std::{
 };
 
 use gpui_kit::{IntoElement as _, TestAppContext, VisualTestContext};
-use gpui_shell::ShellRuntime;
 
 fn app_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("app")
@@ -13,7 +12,7 @@ fn app_dir() -> PathBuf {
 
 #[gpui_kit::test]
 fn logged_out_application_loads_through_the_public_shell_runtime(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     cx.update(|cx| {
         gpui_kit::base::Theme::global_mut(cx).appearance = gpui_kit::base::ThemeAppearance::Dark;
     });
@@ -29,7 +28,7 @@ fn logged_out_application_loads_through_the_public_shell_runtime(cx: &mut TestAp
         std::process::id()
     )));
 
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
     let shell_root = context
@@ -67,9 +66,10 @@ fn logged_out_application_loads_through_the_public_shell_runtime(cx: &mut TestAp
 
     assert!(rendered.contains("Sign in to continue"), "{rendered}");
     assert!(
-        rendered.contains("longbridge-sign-in"),
-        "the sign-in card must offer the action:\n{rendered}"
+        rendered.contains("Button :label(registered) :primary(registered)"),
+        "the sign-in card must offer the native Omarchy action:\n{rendered}"
     );
+    context.update(|_, cx| assert_eq!(view.read(cx).build_error(), None));
     // The window draws its own title bar -- the host opens it without a system
     // one -- and that bar is where the window's identity lives. The card only
     // asks for the session; if the tagline ever reappears it has been put back

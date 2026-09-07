@@ -4,9 +4,6 @@
   "version": "0.5.2",
   "shell-version": "0.6.0",
   "entry": "main.js",
-  "dependencies": {
-    "omarchy-ui": "huacnlee/omarchy-ui"
-  },
   "capabilities": {
     "fs": {
       "read": ["${pluginDir}"]

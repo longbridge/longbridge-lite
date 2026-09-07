@@ -139,8 +139,8 @@ fn primary_modifiers() -> gpui_kit::Modifiers {
 
 #[gpui_kit::test]
 fn omarchy_application_follows_system_appearance(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("main.js");
     let main_path = fixture.root.join("main.js");
     let main = fs::read_to_string(&main_path)
@@ -239,8 +239,8 @@ let themes = null;"##,
 
 #[gpui_kit::test]
 fn non_omarchy_application_keeps_manual_theme_switching(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("main.js");
     let main_path = fixture.root.join("main.js");
     let main = fs::read_to_string(&main_path)
@@ -290,8 +290,8 @@ fn non_omarchy_application_keeps_manual_theme_switching(cx: &mut TestAppContext)
 
 #[gpui_kit::test]
 fn quote_stream_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("quote_stream.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -321,8 +321,8 @@ fn quote_stream_vectors_run_against_this_application(cx: &mut TestAppContext) {
 /// vanishes.
 #[gpui_kit::test]
 fn a_pushed_order_outlives_the_read_that_is_behind_it(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("order_push.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -346,8 +346,8 @@ fn a_pushed_order_outlives_the_read_that_is_behind_it(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn trade_stream_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("trade_stream.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -371,8 +371,8 @@ fn trade_stream_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn auth_and_http_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("auth_http.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -396,11 +396,11 @@ fn auth_and_http_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn fps_visibility_preference_defaults_off_and_round_trips(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
     let fixture = ApplicationFixture::new("fps_preference.test.js");
     gpui_shell::set_storage_path(fixture.root.join("fps-preference-store.json"));
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
     let (_root, view) = context.update(|window, cx| load_test_view(&runtime, &fixture, window, cx));
@@ -423,11 +423,11 @@ fn fps_visibility_preference_defaults_off_and_round_trips(cx: &mut TestAppContex
 
 #[gpui_kit::test]
 fn the_chosen_chart_interval_outlives_the_session(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
     let fixture = ApplicationFixture::new("chart_mode_preference.test.js");
     gpui_shell::set_storage_path(fixture.root.join("chart-mode-store.json"));
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
     let (_root, view) = context.update(|window, cx| load_test_view(&runtime, &fixture, window, cx));
@@ -450,8 +450,8 @@ fn the_chosen_chart_interval_outlives_the_session(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn chart_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("chart.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -460,8 +460,8 @@ fn chart_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn chart_mode_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("chart_modes.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -470,8 +470,8 @@ fn chart_mode_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn candlestick_geometry_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("candlestick_chart.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -480,8 +480,8 @@ fn candlestick_geometry_vectors_run_against_this_application(cx: &mut TestAppCon
 
 #[gpui_kit::test]
 fn chart_mode_state_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("chart_modes_state.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -490,8 +490,8 @@ fn chart_mode_state_vectors_run_against_this_application(cx: &mut TestAppContext
 
 #[gpui_kit::test]
 fn reconnect_invalidates_the_superseded_chart_request_before_stopping(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("chart_reconnect.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -500,8 +500,8 @@ fn reconnect_invalidates_the_superseded_chart_request_before_stopping(cx: &mut T
 
 #[gpui_kit::test]
 fn protocol_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("protocol.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -510,8 +510,8 @@ fn protocol_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn market_state_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("market.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -520,8 +520,8 @@ fn market_state_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn market_detail_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("market_detail.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -530,8 +530,8 @@ fn market_detail_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn market_detail_state_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("market_detail_state.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -540,9 +540,9 @@ fn market_detail_state_vectors_run_against_this_application(cx: &mut TestAppCont
 
 #[gpui_kit::test]
 fn orders_page_stacks_today_over_history_as_one_filtered_reading(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("orders_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -585,7 +585,10 @@ fn orders_page_stacks_today_over_history_as_one_filtered_reading(cx: &mut TestAp
     // A filter each: the two lists answer different questions, and one box for
     // the two of them hid the short list whenever the long one was narrowed.
     assert_eq!(
-        rendered.matches("Input #").count(),
+        rendered
+            .lines()
+            .filter(|line| line.trim_start().starts_with("Input ."))
+            .count(),
         2,
         "each list carries its own filter:\n{rendered}"
     );
@@ -751,9 +754,9 @@ fn orders_page_stacks_today_over_history_as_one_filtered_reading(cx: &mut TestAp
 
 #[gpui_kit::test]
 fn an_empty_today_gives_its_height_back_to_the_history(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("orders_empty_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -802,7 +805,7 @@ fn an_empty_today_gives_its_height_back_to_the_history(cx: &mut TestAppContext) 
         "no column heads and no empty card over no rows:\n{today}"
     );
     assert!(
-        today.contains("Today Orders") && today.contains("0 orders") && today.contains("Input #"),
+        today.contains("Today Orders") && today.contains("0 orders") && today.contains("Input ."),
         "the heading still carries the count and the filter:\n{today}"
     );
 
@@ -819,7 +822,10 @@ fn an_empty_today_gives_its_height_back_to_the_history(cx: &mut TestAppContext) 
         "{history}"
     );
     assert_eq!(
-        rendered.matches("Input #").count(),
+        rendered
+            .lines()
+            .filter(|line| line.trim_start().starts_with("Input ."))
+            .count(),
         2,
         "both lists keep a filter of their own, empty or not:\n{rendered}"
     );
@@ -827,8 +833,8 @@ fn an_empty_today_gives_its_height_back_to_the_history(cx: &mut TestAppContext) 
 
 #[gpui_kit::test]
 fn watchlist_edit_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("watchlist_edit.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -837,8 +843,8 @@ fn watchlist_edit_vectors_run_against_this_application(cx: &mut TestAppContext) 
 
 #[gpui_kit::test]
 fn order_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("orders.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -853,8 +859,8 @@ fn order_vectors_run_against_this_application(cx: &mut TestAppContext) {
 /// field, so the ticket could otherwise be opened exactly once per run.
 #[gpui_kit::test]
 fn a_dialog_dismissed_by_the_shell_can_be_opened_again(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("dialog_reopen.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -885,8 +891,8 @@ fn a_dialog_dismissed_by_the_shell_can_be_opened_again(cx: &mut TestAppContext) 
 /// cannot use.
 #[gpui_kit::test]
 fn the_order_ticket_can_be_filled_in_from_the_keyboard(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("ticket_keyboard.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -923,16 +929,16 @@ fn the_order_ticket_can_be_filled_in_from_the_keyboard(cx: &mut TestAppContext) 
     // than after it.
     for marker in [
         "Type",
-        "ticket-type-LO",
+        "ButtonGroup \"ticket-type\"",
         "Price",
         "USD",
         "Quantity",
         "Use amount",
         "shares",
         "Valid",
-        "ticket-tif-Day",
+        "ButtonGroup \"ticket-tif\"",
         "Sessions",
-        "ticket-rth-rth",
+        "ButtonGroup \"ticket-rth\"",
         "Cancel",
         "Review",
     ] {
@@ -963,8 +969,8 @@ fn the_order_ticket_can_be_filled_in_from_the_keyboard(cx: &mut TestAppContext) 
 
 #[gpui_kit::test]
 fn the_order_ticket_states_what_it_will_send(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("trade_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1124,8 +1130,8 @@ fn the_order_ticket_states_what_it_will_send(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn trade_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("trade.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1134,8 +1140,8 @@ fn trade_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn portfolio_vectors_run_against_this_application(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("portfolio.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1144,8 +1150,8 @@ fn portfolio_vectors_run_against_this_application(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn watchlist_row_renders_scannable_market_columns(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("watchlist_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1339,9 +1345,9 @@ fn watchlist_row_renders_scannable_market_columns(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn authenticated_workspace_materializes_a_scrollable_watchlist(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("workspace_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1355,6 +1361,7 @@ fn authenticated_workspace_materializes_a_scrollable_watchlist(cx: &mut TestAppC
         move |_, _| draw_view.into_any_element(),
     );
     let rendered = context.update(|_, cx| {
+        assert_eq!(view.read(cx).build_error(), None);
         view.read(cx)
             .snapshot()
             .map(gpui_shell::RenderSnapshot::debug_tree)
@@ -1369,7 +1376,7 @@ fn authenticated_workspace_materializes_a_scrollable_watchlist(cx: &mut TestAppC
             && rendered.contains(r#":id[Str("market-detail-panel")]"#)
             // The interval run is the library's `Tabs` now; the id is the
             // caller's and the component appends each choice's value to it.
-            && rendered.contains("Tabs \"chart-mode\"")
+            && rendered.contains("TabList \"chart-mode\"")
             && !rendered.contains("dock_area"),
         "the responsive page must materialize four plain Panels in priority order: {rendered}"
     );
@@ -1380,9 +1387,9 @@ fn authenticated_workspace_materializes_a_scrollable_watchlist(cx: &mut TestAppC
 /// read a panel's own description from here.
 #[gpui_kit::test]
 fn the_watchlist_pane_still_virtualizes_its_rows(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("watchlist_click.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1421,8 +1428,8 @@ fn the_watchlist_pane_still_virtualizes_its_rows(cx: &mut TestAppContext) {
 
 #[gpui_kit::test]
 fn retained_price_chart_owns_its_indicator_and_dated_tooltip(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("price_chart_view.test.js");
     let fixture_root = fixture.root.clone();
     let window = cx.add_window(move |window, cx| {
@@ -1448,6 +1455,11 @@ fn retained_price_chart_owns_its_indicator_and_dated_tooltip(cx: &mut TestAppCon
         });
     let tree = |context: &mut VisualTestContext| {
         context.update(|_, cx| {
+            assert_eq!(
+                view.read(cx).build_error(),
+                None,
+                "workspace must build before checking its actions"
+            );
             view.read(cx)
                 .snapshot()
                 .map(gpui_shell::RenderSnapshot::debug_tree)
@@ -1583,8 +1595,8 @@ fn retained_price_chart_owns_its_indicator_and_dated_tooltip(cx: &mut TestAppCon
 
 #[gpui_kit::test]
 fn retained_price_chart_hover_rebuilds_the_child_without_the_parent(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("price_chart_retained.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_window = runtime.clone();
@@ -1623,23 +1635,24 @@ fn retained_price_chart_hover_rebuilds_the_child_without_the_parent(cx: &mut Tes
         "the parent must start with one published snapshot"
     );
 
-    let drive_child_only =
-        |context: &mut VisualTestContext, point: gpui_kit::Point<gpui_kit::Pixels>, operation: &str| {
-            let before = runtime.read_metrics();
-            context.simulate_click(point, gpui_kit::Modifiers::default());
-            context.run_until_parked();
-            context.update(|window, cx| window.draw(cx).clear(cx));
-            assert_eq!(
-                runtime.read_metrics().since(&before).script_renders(),
-                1,
-                "{operation} must rebuild exactly the retained child"
-            );
-            let tree = parent_tree(context);
-            assert!(
-                tree.contains("Parent renders: 1"),
-                "{operation} rebuilt the parent:\n{tree}"
-            );
-        };
+    let drive_child_only = |context: &mut VisualTestContext,
+                            point: gpui_kit::Point<gpui_kit::Pixels>,
+                            operation: &str| {
+        let before = runtime.read_metrics();
+        context.simulate_click(point, gpui_kit::Modifiers::default());
+        context.run_until_parked();
+        context.update(|window, cx| window.draw(cx).clear(cx));
+        assert_eq!(
+            runtime.read_metrics().since(&before).script_renders(),
+            1,
+            "{operation} must rebuild exactly the retained child"
+        );
+        let tree = parent_tree(context);
+        assert!(
+            tree.contains("Parent renders: 1"),
+            "{operation} rebuilt the parent:\n{tree}"
+        );
+    };
 
     drive_child_only(
         &mut context,
@@ -1679,8 +1692,8 @@ fn retained_price_chart_hover_rebuilds_the_child_without_the_parent(cx: &mut Tes
 
 #[gpui_kit::test]
 fn a_large_candlestick_publication_does_not_overflow_nested_view_rollback(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("price_chart_large.test.js");
     let fixture_root = fixture.root.clone();
     let window = cx.add_window(move |window, cx| {
@@ -1721,8 +1734,8 @@ fn a_large_candlestick_publication_does_not_overflow_nested_view_rollback(cx: &m
 
 #[gpui_kit::test]
 fn unrelated_quote_updates_do_not_rebuild_the_price_chart_child(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("price_chart_updates.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_window = runtime.clone();
@@ -1759,9 +1772,9 @@ fn unrelated_quote_updates_do_not_rebuild_the_price_chart_child(cx: &mut TestApp
 
 #[gpui_kit::test]
 fn clicking_a_watchlist_row_selects_that_instruments_details(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("watchlist_click.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -1811,8 +1824,8 @@ fn clicking_a_watchlist_row_selects_that_instruments_details(cx: &mut TestAppCon
 
 #[gpui_kit::test]
 fn allocation_donut_folds_past_the_available_theme_palette(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("allocation_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -1885,9 +1898,9 @@ fn allocation_donut_folds_past_the_available_theme_palette(cx: &mut TestAppConte
 
 #[gpui_kit::test]
 fn portfolio_renders_pnl_summary_and_position_columns(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("portfolio_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -2010,9 +2023,9 @@ impl gpui_kit::Render for WorkspaceRoot {
 
 #[gpui_kit::test]
 fn stock_details_lead_with_the_price_and_fold_their_secondary_readings(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("detail_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -2254,8 +2267,8 @@ fn stock_details_lead_with_the_price_and_fold_their_secondary_readings(cx: &mut 
 
 #[gpui_kit::test]
 fn market_detail_panels_name_loading_empty_and_error_states(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("detail_ui_states.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -2298,8 +2311,8 @@ fn market_detail_panels_name_loading_empty_and_error_states(cx: &mut TestAppCont
 
 #[gpui_kit::test]
 fn sparse_order_book_keeps_best_levels_next_to_the_spread(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    cx.update(gpui_omarchy_shell::init);
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("detail_ui_sparse.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -2358,9 +2371,9 @@ fn sparse_order_book_keeps_best_levels_next_to_the_spread(cx: &mut TestAppContex
 
 #[gpui_kit::test]
 fn holdings_scroll_as_one_virtualized_collection_without_pagination(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("holdings_pager.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -2388,9 +2401,9 @@ fn holdings_scroll_as_one_virtualized_collection_without_pagination(cx: &mut Tes
 
 #[gpui_kit::test]
 fn a_bound_chord_reaches_the_action_that_switches_page(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2418,6 +2431,11 @@ fn a_bound_chord_reaches_the_action_that_switches_page(cx: &mut TestAppContext) 
         });
     let tree = |context: &mut VisualTestContext| {
         context.update(|_, cx| {
+            assert_eq!(
+                view.read(cx).build_error(),
+                None,
+                "workspace must build before checking its actions"
+            );
             view.read(cx)
                 .snapshot()
                 .map(gpui_shell::RenderSnapshot::debug_tree)
@@ -2585,9 +2603,9 @@ fn a_bound_chord_reaches_the_action_that_switches_page(cx: &mut TestAppContext) 
 
 #[gpui_kit::test]
 fn modifier_hold_reveals_workspace_tab_shortcuts_until_release(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2648,9 +2666,9 @@ fn modifier_hold_reveals_workspace_tab_shortcuts_until_release(cx: &mut TestAppC
 
 #[gpui_kit::test]
 fn tab_reaches_the_watchlist_filter_and_text_editing_stays_in_the_input(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keyboard_navigation_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2718,9 +2736,9 @@ fn tab_reaches_the_watchlist_filter_and_text_editing_stays_in_the_input(cx: &mut
 
 #[gpui_kit::test]
 fn keyboard_selection_scrolls_a_virtualized_row_into_view(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keyboard_scroll_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2793,9 +2811,9 @@ fn keyboard_selection_scrolls_a_virtualized_row_into_view(cx: &mut TestAppContex
 
 #[gpui_kit::test]
 fn the_window_readout_follows_the_window_it_is_measuring(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2847,18 +2865,23 @@ fn the_window_readout_follows_the_window_it_is_measuring(cx: &mut TestAppContext
     assert!(!wide.contains("narrow"), "{wide}");
 
     let narrow = redraw(&mut context, 700., "ctrl-alt-u");
+    let appearance = context.update(|_, cx| match gpui_kit::base::Theme::global(cx).appearance {
+        gpui_kit::base::ThemeAppearance::Light => "light",
+        gpui_kit::base::ThemeAppearance::Dark => "dark",
+    });
     assert!(
-        narrow
-            .contains("700\u{d7}800 \u{b7} 16px/rem \u{b7} light \u{b7} background \u{b7} narrow"),
+        narrow.contains(&format!(
+            "700\u{d7}800 \u{b7} 16px/rem \u{b7} {appearance} \u{b7} background \u{b7} narrow"
+        )),
         "the readout must follow the window:\n{narrow}"
     );
 }
 
 #[gpui_kit::test]
 fn escape_puts_away_what_the_workspace_opened_and_then_carries_on(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -2924,9 +2947,9 @@ fn escape_puts_away_what_the_workspace_opened_and_then_carries_on(cx: &mut TestA
 fn a_right_press_on_a_watchlist_row_opens_a_menu_for_that_row_and_leaves_the_selection(
     cx: &mut TestAppContext,
 ) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -3022,9 +3045,9 @@ fn a_right_press_on_a_watchlist_row_opens_a_menu_for_that_row_and_leaves_the_sel
 
 #[gpui_kit::test]
 fn the_diagnostics_popover_answers_every_window_measurement(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -3071,16 +3094,26 @@ fn the_diagnostics_popover_answers_every_window_measurement(cx: &mut TestAppCont
     // now; 18 was not on it, and a control offering a size the interface never
     // draws in is offering one nothing was measured against.
     for command in [
-        "shell-rem-12",
-        "shell-rem-14",
-        "shell-rem-16",
-        "shell-focus-next",
-        "shell-focus-prev",
-        "shell-activate",
-        "shell-refresh",
+        "12px",
+        "14px",
+        "16px",
+        "Focus next",
+        "Focus previous",
+        "Bring to front",
+        "Redraw window",
     ] {
         assert!(
-            rendered.contains(&format!("Button \"{command}\"")),
+            rendered
+                .split("Button :label(registered)")
+                .skip(1)
+                .any(|button| {
+                    button
+                        .lines()
+                        .next()
+                        .unwrap_or_default()
+                        .contains(":on_click(fn)")
+                        && button.contains(&format!("text \"{command}\""))
+                }),
             "missing window command {command}:\n{rendered}"
         );
     }
@@ -3088,9 +3121,9 @@ fn the_diagnostics_popover_answers_every_window_measurement(cx: &mut TestAppCont
 
 #[gpui_kit::test]
 fn a_dispatched_action_reaches_the_handler_a_chord_would(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("keymap_ui.test.js");
     let fixture_root = fixture.root.clone();
     let runtime_for_view = runtime.clone();
@@ -3142,9 +3175,9 @@ fn a_dispatched_action_reaches_the_handler_a_chord_would(cx: &mut TestAppContext
 
 #[gpui_kit::test]
 fn an_avatar_draws_its_image_when_it_has_one_and_its_fallback_otherwise(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("avatar_slots.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);
@@ -3178,9 +3211,9 @@ fn an_avatar_draws_its_image_when_it_has_one_and_its_fallback_otherwise(cx: &mut
 
 #[gpui_kit::test]
 fn title_bar_draws_the_themed_official_svg_mark(cx: &mut TestAppContext) {
-    cx.update(gpui_shell::init);
+    cx.update(gpui_omarchy_shell::init);
     grant_app_capabilities();
-    let runtime = cx.update(ShellRuntime::new).expect("runtime");
+    let runtime = cx.update(gpui_omarchy_shell::new_runtime).expect("runtime");
     let fixture = ApplicationFixture::new("title_bar_ui.test.js");
     let window = cx.add_window(|_, _| Empty);
     let mut context = VisualTestContext::from_window(*window.deref(), cx);

@@ -17,7 +17,7 @@
 // density, font size and rounding like every other window on that desktop.
 
 import { platform } from "process";
-import { applyOmarchyStyle, style as omarchyStyle } from "omarchy-ui";
+import { applyOmarchyStyle, style as omarchyStyle } from "./gpui-omarchy/composition.js";
 
 /**
  * This terminal's own rhythm, written in the format `shell.toml` uses so that

@@ -12,7 +12,6 @@ import {
   Scrollbar,
   Table,
   TableBody,
-  Tab,
   Tabs,
   VirtualListScrollHandle,
   h_flex,
@@ -20,6 +19,7 @@ import {
   v_flex,
   v_virtual_list,
 } from "gpui-base";
+import { Tab as NativeTab } from "./gpui-omarchy/index.js";
 import { fps_monitor } from "gpui-fps";
 import { readFile } from "fs/promises";
 import { exit, platform } from "process";
@@ -103,7 +103,7 @@ import {
   omarchyBaseColors,
   omarchyStatusColors,
   omarchyTheme,
-} from "omarchy-ui";
+} from "./gpui-omarchy/composition.js";
 import { applyTerminalStyle, style } from "./style.js";
 import {
   changeTone,
@@ -3510,24 +3510,8 @@ export default class LongbridgeApp extends View {
   }
 
   /**
-   * The page switch, as one segmented control.
-   *
-   * Two tabs styled individually read as decoration -- a pair of quiet chips
-   * with nothing saying they are alternatives -- and a selection has to be a
-   * persistent state, not a hover. So the pair sits in one track: a recessed
-   * background, with the current page distinguished by its foreground and
-   * outline rather than a raised strip of panel colour.
-   *
-   * What carries the state is fill and foreground only. No border, which boxes
-   * each segment and undoes the track, and no shadow, which reads as grime
-   * under a 24px chip rather than as elevation. Weight is constant across
-   * states for the same reason a border would be: a segment that changes weight
-   * changes width, and the control twitches every time the page changes.
-   *
-   * This belongs in `ui.js` beside the other primitives, as `navTabs(tokens,
-   * items, active, onSelect)`. It is written out here because `ui.js` has an
-   * owner and a frozen export list; see the report.
-   *
+   * Native Omarchy tabs own selection styling and pointer activation.
+   * Page shortcuts remain application commands.
    * @param {import("gpui-base").Theme} tokens
    */
   pageSwitch(tokens) {
@@ -3546,29 +3530,15 @@ export default class LongbridgeApp extends View {
       .children(
         PAGES.map((item) => {
           const selected = item.key === this.page;
-          return motion(
-            Tab.new(`page-${item.key}`)
-              .selected(selected)
+          return new NativeTab(`page-${item.key}`, item.caption, selected)
               .on_click((_event, cx) => this.showPage(item.key, cx))
               .flex()
               .relative()
               .items_center()
               .justify_center()
               .h(24)
+              .py(0)
               .px(tokens.spacing.md)
-              // Reserve the state border in both states so selection never
-              // changes the tab's geometry.
-              .border(1)
-              .border_color(selected ? tokens.ring : tokens.background)
-              .bg(selected ? tokens.accent : tokens.background)
-              .text_size(12)
-              .font_weight(700)
-              .text_color(selected ? tokens.accent_foreground : tokens.muted_foreground),
-            "opacity",
-          )
-            .hover((style) => style.text_color(tokens.foreground))
-            .focus((style) => style.text_color(tokens.foreground))
-            .child(item.caption)
             .when(this.primaryModifierDown, (tab) =>
               tab.child(
                 div()

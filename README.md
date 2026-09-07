@@ -102,8 +102,8 @@ configures assets, creates `ShellRuntime`, loads the
 plugin, and opens `ShellRoot`. Native concerns stay in the host; product state
 and rendering stay in JavaScript.
 
-The host currently depends on the sibling [gpui-kit](https://github.com/longbridge/gpui-kit)
-checkout, including the native-state adapter interface used by gpui-omarchy.
+The host pins [gpui-kit](https://github.com/longbridge/gpui-kit) and gpui-omarchy
+to Git commits, including the native-state adapter interface.
 `gpui-shell` exposes a
 constrained ES-module API — one module per crate that provides the capability,
 so `"gpui-kit"` holds GPUI's own elements and what the runtime adds,
@@ -218,9 +218,9 @@ curl -fsSL https://github.com/longbridge/longbridge-lite/raw/refs/heads/main/ins
 
 ## Run
 
-Keep checkouts of `gpui-omarchy` and `gpui-kit` beside this repository. Its `shell` crate
-provides the host adapter; this application explicitly enables its `gpui-shell`
-feature. Cargo generates `app/gpui-omarchy/` from that crate's bundled sources.
+Cargo fetches the pinned `gpui-omarchy-shell` adapter and explicitly enables
+its `gpui-shell` feature. The build script generates `app/gpui-omarchy/` from
+its bundled sources; no sibling checkout or separate Omarchy UI fetch is needed.
 
 Register an OAuth public client once and set its fixed `CLIENT_ID` in
 `app/auth.js`. A public client must not contain a client secret.

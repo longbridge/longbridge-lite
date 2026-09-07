@@ -2522,6 +2522,7 @@ dependencies = [
 [[package]]
 name = "gpui-base"
 version = "0.6.0"
+source = "git+https://github.com/longbridge/gpui-kit?rev=4b383ec8a47e14d4e19759535442e783df99ff67#4b383ec8a47e14d4e19759535442e783df99ff67"
 dependencies = [
  "aho-corasick",
  "anyhow",
@@ -2555,6 +2556,7 @@ dependencies = [
 [[package]]
 name = "gpui-fps"
 version = "0.6.0"
+source = "git+https://github.com/longbridge/gpui-kit?rev=4b383ec8a47e14d4e19759535442e783df99ff67#4b383ec8a47e14d4e19759535442e783df99ff67"
 dependencies = [
  "core-graphics 0.24.0",
  "gpui-pre",
@@ -2571,8 +2573,10 @@ dependencies = [
 [[package]]
 name = "gpui-kit"
 version = "0.6.0"
+source = "git+https://github.com/longbridge/gpui-kit?rev=4b383ec8a47e14d4e19759535442e783df99ff67#4b383ec8a47e14d4e19759535442e783df99ff67"
 dependencies = [
  "gpui-base",
+ "gpui-kit-assets",
  "gpui-pre",
  "gpui-pre-platform",
  "gpui-pre-web",
@@ -2581,6 +2585,7 @@ dependencies = [
 [[package]]
 name = "gpui-kit-assets"
 version = "0.6.0"
+source = "git+https://github.com/longbridge/gpui-kit?rev=4b383ec8a47e14d4e19759535442e783df99ff67#4b383ec8a47e14d4e19759535442e783df99ff67"
 dependencies = [
  "anyhow",
  "gpui-pre",
@@ -2594,18 +2599,19 @@ dependencies = [
 [[package]]
 name = "gpui-omarchy"
 version = "0.1.0"
+source = "git+https://github.com/huacnlee/gpui-omarchy?rev=671cab6bb770387d41dea1c968f52bc06d6d9d16#671cab6bb770387d41dea1c968f52bc06d6d9d16"
 dependencies = [
  "chrono",
- "gpui-base",
  "gpui-kit",
- "gpui-kit-assets",
  "toml 0.8.23",
 ]
 
 [[package]]
 name = "gpui-omarchy-shell"
 version = "0.1.0"
+source = "git+https://github.com/huacnlee/gpui-omarchy?rev=671cab6bb770387d41dea1c968f52bc06d6d9d16#671cab6bb770387d41dea1c968f52bc06d6d9d16"
 dependencies = [
+ "gpui-kit",
  "gpui-omarchy",
  "gpui-shell",
 ]
@@ -3134,6 +3140,7 @@ checksum = "70a09e0bf58aede45b8e7eed6e8d5d6552381c431014d62b349b0133008737bd"
 [[package]]
 name = "gpui-shell"
 version = "0.6.0"
+source = "git+https://github.com/longbridge/gpui-kit?rev=4b383ec8a47e14d4e19759535442e783df99ff67#4b383ec8a47e14d4e19759535442e783df99ff67"
 dependencies = [
  "anyhow",
  "async-channel",

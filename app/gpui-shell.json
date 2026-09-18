@@ -1,7 +1,7 @@
 {
   "id": "com.longbridge.desktop-lite",
   "name": "Longbridge Lite",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "shell-version": "0.6.0",
   "entry": "main.js",
   "dependencies": {

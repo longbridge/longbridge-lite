@@ -31,3 +31,10 @@ split-debuginfo = "unpacked"
 # while the frame is paid on every interaction, all day.
 [profile.dev.package."*"]
 opt-level = 3
+
+# gpui-shell's JS stdlib is LLRT, whose crates still depend on `rquickjs` from
+# crates.io. gpui-kit routes that name to a facade over `quickjs-jit` so the
+# shell and LLRT share one VM, but a `[patch]` only counts in the root
+# manifest, so this one has to be repeated here.
+[patch.crates-io]
+rquickjs = { git = "https://github.com/longbridge/gpui-kit" }

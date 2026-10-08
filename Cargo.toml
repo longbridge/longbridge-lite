@@ -5,8 +5,8 @@ edition = "2024"
 publish = false
 
 [dependencies]
-gpui-shell = { git = "https://github.com/longbridge/gpui-kit" }
-gpui-kit = { git = "https://github.com/longbridge/gpui-kit", default-features = false }
+gpui-shell = { git = "https://github.com/longbridge/gpui-kit", features = ["gpui-fast"] }
+gpui-kit = { git = "https://github.com/longbridge/gpui-kit", default-features = false, features = ["gpui-fast"] }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 [dev-dependencies]
